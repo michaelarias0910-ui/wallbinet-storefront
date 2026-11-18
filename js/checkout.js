@@ -1,9 +1,9 @@
-// Replace these 3 values with your EmailJS account credentials
+// EmailJS Credentials provided
 const EMAILJS_PUBLIC_KEY = "sos9H_-zzf4P9wtg8";
 const EMAILJS_SERVICE_ID = "service_h6nbxxf";
 const EMAILJS_TEMPLATE_ID = "template_mjuiuqp";
 
-if (window.emailjs && EMAILJS_PUBLIC_KEY !== "sos9H_-zzf4P9wtg8") {
+if (window.emailjs && EMAILJS_PUBLIC_KEY) {
   emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
 }
 
@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
       otpStatus.textContent = "Verification code sent! Check your inbox (and spam folder).";
     } catch (err) {
       otpStatus.style.color = "var(--color-danger)";
-      otpStatus.textContent = "Unable to send email. Verify your EmailJS Service ID, Template ID, and Public Key in js/checkout.js.";
+      otpStatus.textContent = "Unable to send email. Please check your network connection or EmailJS template configuration.";
     }
   });
 
