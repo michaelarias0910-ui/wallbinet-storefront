@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wallbinet | Where Space Meets Style</title>
+  <link rel="icon" type="image/jpeg" href="assets/images/logo.jpg" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <!-- Navigation -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand">
+        <img src="assets/images/logo.jpg" alt="Wallbinet Logo" />
+        <span>WALLBINET</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#product">Product</a>
+        <a href="#faq">FAQ &amp; Policies</a>
+        <a href="#wholesale">Wholesale</a>
+        <a href="#location">Location &amp; Contact</a>
+        <a href="tracking.html">Track Order</a>
+      </nav>
+      <button class="cart-btn" id="openCartBtn">
+        <span>Cart</span>
+        <span class="cart-badge" id="cartCountBadge">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Single-Product Hero & Configurator -->
+  <main id="product" class="hero-product">
+    <div class="container product-grid">
+      <!-- Gallery -->
+      <div>
+        <div class="gallery-main">
+          <img id="mainProductImg" src="assets/images/product-open.jpg" alt="Wallbinet Study & Work Cabinet Table" />
+        </div>
+        <div class="gallery-thumbs" id="galleryThumbs"></div>
+      </div>
+
+      <!-- Product Details & Options -->
+      <div>
+        <span class="tagline-pill">Smart Storage. Smart Living.</span>
+        <h1 class="product-title">Wallbinet – Locally-Made Wall-Mounted Foldable Study &amp; Work Cabinet Table</h1>
+        <p class="product-subtagline">“Where Space Meets Style”</p>
+        <div class="product-price" id="displayPrice">₱6,499</div>
+        <p class="product-desc">
+          A locally-made, space-saving wall-mounted cabinet with a foldable study and work table made from durable marine plywood. It features spacious storage, a modern stylish design, perfect for dorms, apartments, and small homes. Can be kept closed for a neat look and opened to use as a work/study station.
+        </p>
+
+        <div class="feature-badges">
+          <span>Durable Marine Plywood</span>
+          <span>Fold-Down Work Table</span>
+          <span>Built-In Storage Shelves</span>
+          <span>Space-Saving Wall Mount</span>
+        </div>
+
+        <!-- Size Selector -->
+        <div class="config-group">
+          <label class="config-label">1. Select Cabinet Size</label>
+          <div class="option-grid" id="sizeOptions"></div>
+        </div>
+
+        <!-- Color Selector -->
+        <div class="config-group">
+          <label class="config-label">2. Select Finish / Color</label>
+          <div class="color-grid" id="colorOptions"></div>
+        </div>
+
+        <!-- Quantity & Add to Cart -->
+        <div class="qty-row">
+          <div class="qty-box">
+            <button type="button" id="decQtyBtn">−</button>
+            <span id="productQty">1</span>
+            <button type="button" id="incQtyBtn">+</button>
+          </div>
+          <button type="button" class="btn btn-primary" id="addToCartBtn" style="flex:1;">
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FAQ & Store Policies -->
+  <section id="faq" class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Frequently Asked Questions &amp; Policies</h2>
+        <p>Everything you need to know about Customer Care, Shipping, Returns, Privacy, and Wholesale.</p>
+      </div>
+      <div class="faq-list" id="faqContainer"></div>
+    </div>
+  </section>
+
+  <!-- Wholesale & Location / Map -->
+  <section id="wholesale" class="section">
+    <div class="container info-grid">
+      <!-- Wholesale Form -->
+      <div class="card">
+        <h2 style="margin-bottom:8px;">Wholesale &amp; Bulk Inquiries</h2>
+        <p style="color:#5C6064; margin-bottom:20px; font-size:0.94rem;">
+          Outfitting a dormitory, condo unit, school, or office? Request custom volume pricing directly from our Pampanga workshop.
+        </p>
+        <form id="wholesaleForm">
+          <div class="form-group">
+            <label>Full Name / Organization</label>
+            <input type="text" class="form-control" required placeholder="e.g., Juan Dela Cruz / Pampanga Dorms" />
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" class="form-control" required placeholder="you@example.com" />
+          </div>
+          <div class="form-group">
+            <label>Estimated Quantity &amp; Preferred Sizes</label>
+            <input type="text" class="form-control" required placeholder="e.g., 15 units Medium (Wood Grain)" />
+          </div>
+          <div class="form-group">
+            <label>Additional Details</label>
+            <textarea class="form-control" rows="3" placeholder="Delivery location and target schedule"></textarea>
+          </div>
+          <button type="submit" class="btn btn-oak" style="width:100%;">Submit Wholesale Inquiry</button>
+          <p id="wholesaleMsg" style="margin-top:12px; color:var(--color-success); font-weight:600; display:none;">
+            Thank you! Your wholesale inquiry has been recorded. Our team will contact you shortly.
+          </p>
+        </form>
+      </div>
+
+      <!-- Location, Contact & Google Map -->
+      <div class="card" id="location">
+        <h2 style="margin-bottom:8px;">Visit &amp; Contact Us</h2>
+        <p style="color:#5C6064; margin-bottom:16px; font-size:0.94rem;">
+          Proudly crafted in Central Luzon and shipped nationwide.
+        </p>
+        <p><strong>Workshop Location:</strong> Sta. Ana, Pampanga</p>
+        <p><strong>Contact Number:</strong> <a href="tel:09684096482">0968-409-6482</a></p>
+        <p><strong>Email:</strong> <a href="mailto:wallbinetcorp@gmail.com">wallbinetcorp@gmail.com</a></p>
+
+        <div class="social-links" style="margin-top:14px;">
+          <a href="https://www.facebook.com/share/1CJ2Shus1K/" target="_blank" rel="noopener" style="background:var(--color-charcoal); color:#fff;">Facebook</a>
+          <a href="https://vt.tiktok.com/ZSpahbEbB/" target="_blank" rel="noopener" style="background:var(--color-charcoal); color:#fff;">TikTok</a>
+          <a href="https://www.instagram.com/wallbinet?cplk=MXUzZmxjb3pmbnV0cA==" target="_blank" rel="noopener" style="background:var(--color-charcoal); color:#fff;">Instagram</a>
+        </div>
+
+        <iframe
+          class="map-frame"
+          title="Wallbinet Sta. Ana, Pampanga Map"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps?q=Sta.+Ana,+Pampanga,+Philippines&output=embed">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h3 style="color:#fff; letter-spacing:0.06em; margin-bottom:10px;">WALLBINET</h3>
+          <p style="font-size:0.92rem; color:#C8C8C8;">
+            Where Space Meets Style • Smart Storage. Smart Living.<br />
+            Locally-made marine plywood wall-mounted study &amp; work cabinets.
+          </p>
+        </div>
+        <div>
+          <h4 style="color:#fff; margin-bottom:10px;">Quick Links</h4>
+          <p><a href="#product">Configure Product</a></p>
+          <p><a href="tracking.html">Track Your Order</a></p>
+          <p><a href="#faq">Shipping &amp; Return Policies</a></p>
+        </div>
+        <div>
+          <h4 style="color:#fff; margin-bottom:10px;">Connect</h4>
+          <p>Sta. Ana, Pampanga</p>
+          <p>0968-409-6482</p>
+          <p>wallbinetcorp@gmail.com</p>
+        </div>
+      </div>
+      <div style="border-top:1px solid rgba(255,255,255,0.12); padding-top:18px; font-size:0.85rem; text-align:center; color:#AAA;">
+        © 2026 Wallbinet. All Rights Reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Slide-Over Cart Drawer (With Full Edit & Delete) -->
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="drawer-header">
+      <h3>Your Cart</h3>
+      <button type="button" id="closeCartBtn" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
+    </div>
+    <div class="drawer-body" id="cartItemsContainer"></div>
+    <div class="drawer-footer">
+      <div style="display:flex; justify-content:space-between; font-weight:800; font-size:1.15rem; margin-bottom:14px;">
+        <span>Subtotal</span>
+        <span id="cartSubtotal">₱0</span>
+      </div>
+      <a href="checkout.html" class="btn btn-primary" id="proceedCheckoutBtn" style="width:100%;">
+        Proceed to Checkout
+      </a>
+    </div>
+  </aside>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

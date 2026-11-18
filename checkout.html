@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout | Wallbinet</title>
+  <link rel="icon" type="image/jpeg" href="assets/images/logo.jpg" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand">
+        <img src="assets/images/logo.jpg" alt="Wallbinet Logo" />
+        <span>WALLBINET</span>
+      </a>
+      <a href="index.html" class="btn btn-outline">← Back to Store</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Checkout Form View -->
+    <div class="checkout-grid" id="checkoutSection">
+      <div class="card">
+        <h2 style="margin-bottom:18px;">Delivery &amp; Payment Verification</h2>
+        <form id="checkoutForm">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="custName" class="form-control" required placeholder="Juan Dela Cruz" />
+          </div>
+
+          <div class="form-group">
+            <label>Mobile Number</label>
+            <input type="tel" id="custPhone" class="form-control" required placeholder="09XX-XXX-XXXX" />
+          </div>
+
+          <div class="form-group">
+            <label>Complete Delivery Address</label>
+            <textarea id="custAddress" class="form-control" rows="2" required placeholder="House/Unit No., Street, Barangay, City/Municipality, Province"></textarea>
+          </div>
+
+          <!-- EmailJS OTP Verification -->
+          <div class="otp-box">
+            <label style="display:block; font-weight:700; margin-bottom:6px;">
+              Registered Email Verification (Required Before Payment)
+            </label>
+            <div style="display:flex; gap:8px; margin-bottom:10px;">
+              <input type="email" id="custEmail" class="form-control" required placeholder="Enter your email address" />
+              <button type="button" class="btn btn-oak" id="sendOtpBtn" style="white-space:nowrap;">Send Code</button>
+            </div>
+            <div style="display:flex; gap:8px;">
+              <input type="text" id="otpInput" class="form-control" maxlength="6" placeholder="Enter 6-digit verification code" />
+              <button type="button" class="btn btn-primary" id="verifyOtpBtn" style="white-space:nowrap;">Verify Email</button>
+            </div>
+            <p id="otpStatus" style="font-size:0.86rem; margin-top:8px; font-weight:600;"></p>
+          </div>
+
+          <!-- Payment Method -->
+          <label class="config-label">Select Payment Method</label>
+          <div class="payment-grid" id="paymentMethods">
+            <div class="payment-option active" data-method="GCash">GCash</div>
+            <div class="payment-option" data-method="Maya">Maya</div>
+            <div class="payment-option" data-method="PayPal">PayPal</div>
+            <div class="payment-option" data-method="Credit Card">Credit Card</div>
+            <div class="payment-option" data-method="Debit Card">Debit Card</div>
+            <div class="payment-option" data-method="Cash on Delivery (COD)">Cash on Delivery (COD)</div>
+          </div>
+
+          <div id="paymentExtraFields" style="margin-bottom:16px;"></div>
+
+          <!-- 4 Mandatory Agreement Checkboxes -->
+          <div class="checkbox-list">
+            <label class="checkbox-row">
+              <input type="checkbox" id="chkShipping" required />
+              <span>I have read and agree to the <span class="policy-link" data-policy="shipping">Shipping Policy</span>.</span>
+            </label>
+            <label class="checkbox-row">
+              <input type="checkbox" id="chkReturns" required />
+              <span>I have read and agree to the <span class="policy-link" data-policy="returns">Return and Exchange Policy</span>.</span>
+            </label>
+            <label class="checkbox-row">
+              <input type="checkbox" id="chkPrivacy" required />
+              <span>I have read and agree to the <span class="policy-link" data-policy="privacy">Privacy and Safety Policy</span>.</span>
+            </label>
+            <label class="checkbox-row">
+              <input type="checkbox" id="chkContract" required />
+              <span>I accept the terms of the <span class="policy-link" data-policy="contract">Purchase &amp; Installation Contract</span>.</span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="completePaymentBtn" style="width:100%;" disabled>
+            Complete Payment
+          </button>
+        </form>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="card">
+        <h3 style="margin-bottom:16px;">Order Summary</h3>
+        <div id="checkoutSummaryItems"></div>
+        <hr style="border:none; border-top:1px solid var(--color-border); margin:16px 0;" />
+        <div style="display:flex; justify-content:space-between; font-weight:800; font-size:1.2rem;">
+          <span>Total Amount</span>
+          <span id="checkoutTotal">₱0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Purchase Success View -->
+    <div id="successSection" class="card" style="display:none; max-width:660px; margin:56px auto; text-align:center;">
+      <div style="width:64px; height:64px; border-radius:50%; background:var(--color-success); color:#fff; font-size:2rem; display:flex; align-items:center; justify-content:center; margin:0 auto 18px;">
+        ✓
+      </div>
+      <h2 style="font-size:1.85rem; margin-bottom:8px;">Purchase Successful!</h2>
+      <p style="color:#4A4D50; margin-bottom:20px;">
+        Thank you for ordering from <strong>Wallbinet</strong>. Your payment and order details have been confirmed.
+      </p>
+      <div style="background:var(--color-bg); padding:18px; border-radius:var(--radius-sm); border:1px solid var(--color-border); text-align:left; margin-bottom:24px;">
+        <p><strong>Order ID:</strong> <span id="receiptOrderId"></span></p>
+        <p><strong>Verified Email:</strong> <span id="receiptEmail"></span></p>
+        <p><strong>Payment Method:</strong> <span id="receiptMethod"></span></p>
+        <p><strong>Amount Paid:</strong> <span id="receiptTotal"></span></p>
+        <p><strong>Tracking Link:</strong> <a id="receiptTrackLink" href="#" style="color:var(--color-oak); font-weight:700; text-decoration:underline;"></a></p>
+      </div>
+      <a id="trackNowBtn" href="#" class="btn btn-primary">Track Delivery Status</a>
+    </div>
+  </main>
+
+  <!-- Policy Reader Modal -->
+  <div class="modal-backdrop" id="policyModal">
+    <div class="modal-box">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+        <h3 id="policyModalTitle"></h3>
+        <button type="button" id="closePolicyModal" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
+      </div>
+      <div id="policyModalBody" style="font-size:0.94rem; color:#444;"></div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/checkout.js"></script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Tracking | Wallbinet</title>
+  <link rel="icon" type="image/jpeg" href="assets/images/logo.jpg" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand">
+        <img src="assets/images/logo.jpg" alt="Wallbinet Logo" />
+        <span>WALLBINET</span>
+      </a>
+      <a href="index.html" class="btn btn-outline">← Back to Store</a>
+    </div>
+  </header>
+
+  <main class="container" style="padding:56px 20px; max-width:760px;">
+    <div class="card">
+      <h1 style="font-size:1.75rem; margin-bottom:8px;">Track Your Wallbinet Delivery</h1>
+      <p style="color:#5C6064; margin-bottom:20px;">
+        Enter your Order ID (e.g., <strong>WB-2026-4821</strong>) to check your shipment's current location and progress.
+      </p>
+
+      <form id="trackSearchForm" style="display:flex; gap:10px; margin-bottom:28px;">
+        <input type="text" id="orderIdInput" class="form-control" required placeholder="WB-2026-XXXX" />
+        <button type="submit" class="btn btn-primary">Track</button>
+      </form>
+
+      <div id="trackingResult"></div>
+    </div>
+  </main>
+
+  <script src="js/data.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      const queryOrder = params.get("order");
+      const input = document.getElementById("orderIdInput");
+      const resultBox = document.getElementById("trackingResult");
+
+      function renderOrderTracking(id) {
+        const cleanId = id.trim().toUpperCase();
+        input.value = cleanId;
+        const orders = getOrders();
+        const found = orders.find(o => o.orderId === cleanId);
+
+        if (!found) {
+          resultBox.innerHTML = `<p style="color:var(--color-danger); font-weight:600;">No order found for ID "${cleanId}". Please double-check your receipt.</p>`;
+          return;
+        }
+
+        const timelineHtml = found.history
+          .map(step => `
+            <div class="timeline-step">
+              <strong>${step.status}</strong>
+              <div style="color:var(--color-walnut); font-size:0.92rem; font-weight:600;">Location: ${step.location}</div>
+              <div style="color:#666; font-size:0.82rem;">${step.timestamp}</div>
+            </div>
+          `)
+          .join("");
+
+        resultBox.innerHTML = `
+          <div style="background:var(--color-bg); padding:18px; border-radius:var(--radius-sm); border:1px solid var(--color-border); margin-bottom:24px;">
+            <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+              <div>
+                <span style="font-size:0.82rem; color:#666;">ORDER ID</span>
+                <h3 style="color:var(--color-charcoal);">${found.orderId}</h3>
+              </div>
+              <div>
+                <span style="font-size:0.82rem; color:#666;">CURRENT STATUS</span>
+                <h3 style="color:var(--color-oak);">${found.currentStatus}</h3>
+              </div>
+            </div>
+            <p style="margin-top:10px; font-size:0.92rem;"><strong>Current Location:</strong> ${found.currentLocation}</p>
+            <p style="font-size:0.92rem;"><strong>Destination:</strong> ${found.customerAddress}</p>
+            <p style="font-size:0.92rem;"><strong>Payment:</strong> ${found.paymentMethod} (${formatPeso(found.totalAmount)})</p>
+          </div>
+
+          <h3 style="margin-bottom:16px;">Shipment Location History</h3>
+          <div class="timeline">${timelineHtml}</div>
+        `;
+      }
+
+      if (queryOrder) {
+        renderOrderTracking(queryOrder);
+      }
+
+      document.getElementById("trackSearchForm").addEventListener("submit", e => {
+        e.preventDefault();
+        const val = input.value.trim();
+        window.history.replaceState({}, "", `tracking.html?order=${encodeURIComponent(val)}`);
+        renderOrderTracking(val);
+      });
+    });
+  </script>
+</body>
+</html>
